@@ -82,8 +82,8 @@ function Game() {
 	const player2 = "O";
 	// Initialize current player to X
 	let currentPlayer = player1;
-	const currentPlayerDiv = document.querySelector(".current-player");
-	currentPlayerDiv.textContent = `${currentPlayer}'s turn`;
+	const gameStatusDiv = document.querySelector(".game-status");
+	UpdateGameStatusDiv(`${currentPlayer}'s turn`);
 	// Repeat rows * columns times
 	let round = 1;
 	// Select Sell number
@@ -92,7 +92,10 @@ function Game() {
 		cell.addEventListener("click", () => {
 			// Getting the row and column
 			const { row, column } = TransformCellNumber(cellNumber + 1);
-			if (board[row][column] === "") {
+			if (
+				board[row][column] === "" &&
+				!gameStatusDiv.textContent.includes("wins")
+			) {
 				ModifyBoard(board, row, column, currentPlayer);
 				// Update the cell with the selection
 				if (cell.textContent === "") {
@@ -110,26 +113,44 @@ function Game() {
 			} else {
 				return;
 			}
-			// If odd X, else O
-			if (round % 2 !== 0) {
-				currentPlayer = player1;
-			} else {
-				currentPlayer = player2;
-			}
-			// Update DIV with the current player
-			currentPlayerDiv.textContent = `${currentPlayer}'s turn`;
+			// Checking the game status
 			const { status, player } = CheckStatus(board, player1, player2);
 			// Show alert with the game result
 			if (status === "win") {
-				alert(`Player ${player} wins`);
-				return `Player ${player} wins`;
+				console.log(`Player ${player} wins`);
+				UpdateGameStatusDiv(`Player ${player} wins`);
+				return;
 			}
 			if (status === "draw") {
-				alert("It's a draw");
-				return "It's a draw";
+				console.log("It's a draw");
+				UpdateGameStatusDiv("It's a draw");
+				return;
+			}
+			// If odd X, else O
+			if (round % 2 !== 0) {
+				currentPlayer = player1;
+				// Update DIV with the current player
+				UpdateGameStatusDiv(`${currentPlayer}'s turn`);
+			} else {
+				currentPlayer = player2;
+				// Update DIV with the current player
+				UpdateGameStatusDiv(`${currentPlayer}'s turn`);
 			}
 		});
 	});
+}
+
+// Function to update the gameStatusDiv
+function UpdateGameStatusDiv(status) {
+	const gameStatusDiv = document.querySelector(".game-status");
+	gameStatusDiv.textContent = status;
+}
+
+// Function to clear the board
+function ClearBoard() {
+	const boardDiv = document.querySelector(".board");
+	boardDiv.innerHTML = "";
+	Game();
 }
 
 // Call game function

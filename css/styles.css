@@ -64,7 +64,7 @@ body {
 	background: var(--bg-300);
 }
 
-.current-player {
+.game-status {
 	text-align: center;
 	padding: 20px 0px;
 	font-size: 2rem;
