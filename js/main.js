@@ -56,10 +56,13 @@ function CheckStatus(board, player1, player2) {
 			}
 		}
 		// Check diagonals
-		if (board[0][0] === board[1][1] && board[1][1] === board[2][2]) {
-			if (board[0][0] === player1) {
+		if (
+			(board[0][0] === board[1][1] && board[1][1] === board[2][2]) ||
+			(board[0][2] === board[1][1] && board[1][1] === board[2][0])
+		) {
+			if (board[1][1] === player1) {
 				return { status: "win", player: player1 };
-			} else if (board[0][0] === player2) {
+			} else if (board[1][1] === player2) {
 				return { status: "win", player: player2 };
 			}
 		}
@@ -87,6 +90,7 @@ function Game() {
 	const cellsDiv = document.querySelectorAll(".board-cell");
 	cellsDiv.forEach((cell, cellNumber) => {
 		cell.addEventListener("click", () => {
+			console.log(board);
 			// Getting the row and column
 			const { row, column } = TransformCellNumber(cellNumber + 1);
 			if (board[row][column] === "") {
