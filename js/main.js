@@ -41,37 +41,30 @@ function CheckStatus(board, player1, player2) {
 		// Check rows
 		if (board[i][0] === board[i][1] && board[i][1] === board[i][2]) {
 			if (board[i][0] === player1) {
-				alert("Player 1 wins");
 				return { status: "win", player: player1 };
 			} else if (board[i][0] === player2) {
-				alert("Player O wins");
 				return { status: "win", player: player2 };
 			}
 		}
 		// Check columns
 		if (board[0][i] === board[1][i] && board[1][i] === board[2][i]) {
 			if (board[0][i] === player1) {
-				alert("Player 1 wins");
 				return { status: "win", player: player1 };
 			} else if (board[0][i] === player2) {
-				alert("Player O wins");
 				return { status: "win", player: player2 };
 			}
 		}
 		// Check diagonals
 		if (board[0][0] === board[1][1] && board[1][1] === board[2][2]) {
 			if (board[0][0] === player1) {
-				alert("Player X wins");
 				return { status: "win", player: player1 };
 			} else if (board[0][0] === player2) {
-				alert("Player O wins");
 				return { status: "win", player: player2 };
 			}
 		}
 	}
 	// If no winner, check for draw
 	if (board.every((row) => row.every((cell) => cell !== ""))) {
-		alert("Draw");
 		return { status: "draw", player: null };
 	}
 	// If no winner or draw, continue game
@@ -91,41 +84,42 @@ function Game() {
 	const cellsDiv = document.querySelectorAll(".board-cell");
 	cellsDiv.forEach((cell, cellNumber) => {
 		cell.addEventListener("click", () => {
-			console.log(round);
+			// Getting the row and column
+			const { row, column } = TransformCellNumber(cellNumber + 1);
+			if (board[row][column] === "") {
+				ModifyBoard(board, row, column, currentPlayer);
+				// Update the cell with the selection
+				if (cell.textContent === "") {
+					if (currentPlayer === player1) {
+						cell.textContent = "X";
+						currentPlayer = player2;
+					} else {
+						cell.textContent = "O";
+						currentPlayer = player1;
+					}
+				}
+				round++;
+			} else {
+				alert("Cell not empty, select a different one");
+				return;
+			}
 			// If odd X, else O
 			if (round % 2 !== 0) {
 				currentPlayer = player1;
 			} else {
 				currentPlayer = player2;
 			}
-			// Update the cell with the selection
-			if (cell.textContent === "") {
-				if (currentPlayer === player1) {
-					cell.textContent = "X";
-					currentPlayer = player2;
-				} else {
-					cell.textContent = "O";
-					currentPlayer = player1;
-				}
-			}
+			// Update DIV with the current player
 			const currentPlayerDiv = document.querySelector(".current-player");
 			currentPlayerDiv.textContent = `Current player: ${currentPlayer}`;
-			// Getting the row and column
-			const { row, column } = TransformCellNumber(cellNumber);
-			if (board[row][column] === "") {
-				ModifyBoard(board, row, column, currentPlayer);
-				console.log(board);
-				round++;
-			} else {
-				alert("Cell not empty, select a different one");
-			}
 			const { status, player } = CheckStatus(board, player1, player2);
 			if (status === "win") {
-				console.log(`Player ${player} wins1`);
+				alert(`Player ${player} wins`);
 				return `Player ${player} wins`;
 			}
 			if (status === "draw") {
-				return `It's a draw`;
+				alert("It's a draw");
+				return "It's a draw";
 			}
 		});
 	});

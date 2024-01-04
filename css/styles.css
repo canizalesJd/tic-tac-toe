@@ -29,7 +29,7 @@ body {
 .board div {
 	border: 2px solid black;
 	padding: 20px;
-	font-size: 5rem;
+	font-size: 4rem;
 	display: flex;
 	justify-content: center;
 	align-items: center;
