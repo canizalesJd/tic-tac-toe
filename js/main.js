@@ -3,10 +3,11 @@ function BoardCreation() {
 	const columns = 3;
 	const rows = 3;
 	const board = [];
-	// Creating 2D array
+	// Creating a div for the board
 	const boardDiv = document.createElement("div");
 	boardDiv.classList.add("board");
 	const gameContainer = document.querySelector(".game-container");
+	// Creating 2D array
 	gameContainer.appendChild(boardDiv);
 	for (let i = 0; i < columns; i++) {
 		// row
@@ -78,6 +79,8 @@ function Game() {
 	const player2 = "O";
 	// Initialize current player to X
 	let currentPlayer = player1;
+	const currentPlayerDiv = document.querySelector(".current-player");
+	currentPlayerDiv.textContent = `${currentPlayer}'s turn`;
 	// Repeat rows * columns times
 	let round = 1;
 	// Select Sell number
@@ -110,9 +113,9 @@ function Game() {
 				currentPlayer = player2;
 			}
 			// Update DIV with the current player
-			const currentPlayerDiv = document.querySelector(".current-player");
-			currentPlayerDiv.textContent = `Current player: ${currentPlayer}`;
+			currentPlayerDiv.textContent = `${currentPlayer}'s turn`;
 			const { status, player } = CheckStatus(board, player1, player2);
+			// Show alert with the game result
 			if (status === "win") {
 				alert(`Player ${player} wins`);
 				return `Player ${player} wins`;
