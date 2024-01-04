@@ -98,9 +98,11 @@ function Game() {
 				if (cell.textContent === "") {
 					if (currentPlayer === player1) {
 						cell.textContent = "X";
+						cell.classList.add("color-accent");
 						currentPlayer = player2;
 					} else {
 						cell.textContent = "O";
+						cell.classList.add("color-alternate");
 						currentPlayer = player1;
 					}
 				}
