@@ -145,10 +145,13 @@ function UpdateGameStatusDiv(status) {
 
 // Function to clear the board
 function ClearBoard() {
-	const boardDiv = document.querySelector(".board");
-	boardDiv.innerHTML = "";
+	const gameContainer = document.querySelector(".game-container");
+	gameContainer.innerHTML = "";
 	Game();
 }
+
+const resetButton = document.querySelector(".reset-btn");
+resetButton.addEventListener("click", ClearBoard);
 
 // Call game function
 Game();
