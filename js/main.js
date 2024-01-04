@@ -115,14 +115,11 @@ function Game() {
 			}
 			// Checking the game status
 			const { status, player } = CheckStatus(board, player1, player2);
-			// Show alert with the game result
 			if (status === "win") {
-				console.log(`Player ${player} wins`);
 				UpdateGameStatusDiv(`Player ${player} wins`);
 				return;
 			}
 			if (status === "draw") {
-				console.log("It's a draw");
 				UpdateGameStatusDiv("It's a draw");
 				return;
 			}

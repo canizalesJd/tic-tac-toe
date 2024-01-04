@@ -28,12 +28,16 @@ h1 {
 }
 
 body {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 	font-size: 18px;
 	width: 100vw;
 	min-height: 100vh;
 	font-family: "Montserrat", sans-serif;
 	background: var(--bg-200);
 	color: var(--text-100);
+	overflow-x: hidden;
 }
 
 .board {
@@ -80,4 +84,62 @@ body {
 
 .light-grey-bg {
 	background: var(--bg-300);
+}
+
+.game-controls {
+	padding: 20px 0px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.reset-btn {
+	border: none;
+	font-family: inherit;
+	font-weight: 900;
+	font-size: 1.7em;
+	background: var(--primary-100);
+	color: var(--bg-100);
+	padding: 20px 50px;
+	width: 400px;
+	max-width: 95vw;
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+}
+
+.reset-btn:hover {
+	transition: 300ms;
+	background: var(--accent-200);
+}
+
+footer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	bottom: 0;
+	padding: 15px;
+	width: 100vw;
+	text-align: center;
+}
+
+footer > :nth-child(1) {
+	margin: 10px;
+}
+
+footer img {
+	max-height: 40px;
+}
+
+footer a {
+	font-weight: 900;
+	text-decoration: none;
+	color: inherit;
+}
+
+@media screen and (max-width: 380px) {
+	footer {
+		border: 2px solid red;
+		flex-direction: column;
+	}
 }
