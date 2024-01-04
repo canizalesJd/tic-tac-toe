@@ -26,6 +26,50 @@ function SelectCell(columns = 3, rows = 3) {
 	return { row, column };
 }
 
+// Function to modify the board
+function ModifyBoard(board, row, column, player) {
+	board[row][column] = player;
+	return board;
+}
+
+// Function to get the game winner
+function CheckStatus(board, player1, player2) {
+	for (let i = 0; i < board.length; i++) {
+		// Check rows
+		if (board[i][0] === board[i][1] && board[i][1] === board[i][2]) {
+			if (board[i][0] === player1) {
+				return { status: "win", player: player1 };
+			} else if (board[i][0] === player2) {
+				return { status: "win", player: player2 };
+			}
+		}
+		// Check columns
+		if (board[0][i] === board[1][i] && board[1][i] === board[2][i]) {
+			if (board[0][i] === player1) {
+				return { status: "win", player: player1 };
+			} else if (board[0][i] === player2) {
+				console.log("Player 2 wins");
+				return { status: "win", player: player2 };
+			}
+		}
+		// Check diagonals
+		if (board[0][0] === board[1][1] && board[1][1] === board[2][2]) {
+			if (board[0][0] === player1) {
+				return { status: "win", player: player1 };
+			} else if (board[0][0] === player2) {
+				return { status: "win", player: player2 };
+			}
+		}
+	}
+	// If no winner, check for draw
+	if (board.every((row) => row.every((cell) => cell !== ""))) {
+		console.log("Draw");
+		return { status: "draw", player: null };
+	}
+	// If no winner or draw, continue game
+	return { status: "continue", player: null };
+}
+
 function Game() {
 	const { rows, columns, board } = BoardCreation();
 	// Declare players
@@ -48,16 +92,18 @@ function Game() {
 			ModifyBoard(board, row, column, currentPlayer);
 			round++;
 		} else {
-			console.log("Cell not empty, select a different one");
+			alert("Cell not empty, select a different one");
 		}
-		console.log(board);
+		const { status, player } = CheckStatus(board, player1, player2);
+		if (status === "win") {
+			console.log(`Player ${player} wins1`);
+			return `Player ${player} wins`;
+		}
+		if (status === "draw") {
+			return `It's a draw`;
+		}
 	}
 }
 
-// Function to modify the board
-function ModifyBoard(board, row, column, player) {
-	board[row][column] = player;
-	return board;
-}
-
+// Call game function
 Game();
