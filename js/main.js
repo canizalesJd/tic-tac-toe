@@ -90,7 +90,6 @@ function Game() {
 	const cellsDiv = document.querySelectorAll(".board-cell");
 	cellsDiv.forEach((cell, cellNumber) => {
 		cell.addEventListener("click", () => {
-			console.log(board);
 			// Getting the row and column
 			const { row, column } = TransformCellNumber(cellNumber + 1);
 			if (board[row][column] === "") {
@@ -107,7 +106,6 @@ function Game() {
 				}
 				round++;
 			} else {
-				alert("Cell not empty, select a different one");
 				return;
 			}
 			// If odd X, else O
