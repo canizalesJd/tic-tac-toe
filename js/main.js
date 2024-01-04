@@ -16,10 +16,12 @@ function BoardCreation() {
 }
 
 // Creating a function to select a cell
-function SelectCell(columns = 3) {
-	const cell = prompt("Select a cell");
+function SelectCell(columns = 3, rows = 3) {
+	let cell = prompt("Select a cell");
+	while (isNaN(cell) || cell === "" || cell < 1 || cell > rows * columns) {
+		cell = prompt("Invalid input, select a cell again");
+	}
 	const row = Math.floor((cell - 1) / columns);
-	4;
 	const column = (cell - 1) % columns;
 	return { row, column };
 }
@@ -41,15 +43,15 @@ function Game() {
 			currentPlayer = player2;
 		}
 		// Getting the row and column
-		const { row, column } = SelectCell(columns);
+		const { row, column } = SelectCell(columns, rows);
 		if (board[row][column] === "") {
 			ModifyBoard(board, row, column, currentPlayer);
 			round++;
 		} else {
 			console.log("Cell not empty, select a different one");
 		}
+		console.log(board);
 	}
-	console.log(board);
 }
 
 // Function to modify the board
